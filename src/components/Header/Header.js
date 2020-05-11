@@ -4,29 +4,27 @@ import Navbar from 'react-bootstrap/Navbar'
 
 const authenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#change-password">Change Password</Nav.Link>
-    <Nav.Link href="#sign-out">Sign Out</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="#change-password">Change Password</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="#sign-out">Sign Out</Nav.Link>
   </Fragment>
 )
 
 const unauthenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#sign-up">Sign Up</Nav.Link>
-    <Nav.Link href="#sign-in">Sign In</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="#sign-up">Sign Up</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="#sign-in">Sign In</Nav.Link>
   </Fragment>
 )
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link to="/">Home</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="/">Home</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
-  <Navbar bg="primary" variant="dark" expand="md">
-    <Navbar.Brand href="#">
-      come-criollo-client
-    </Navbar.Brand>
+  <Navbar expand="md">
+    <Navbar.Brand href="#"> Come Criollo </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">

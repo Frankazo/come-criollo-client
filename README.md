@@ -11,9 +11,9 @@ App to connect small business with people in third world countries, You as a Use
 
 ## Important Links
 
-- [Client Repo](www.link.com)
+- [API Repo](https://github.com/Frankazo/come-criollo-client)
 - [Deployed API](https://still-refuge-15449.herokuapp.com/)
-- [Deployed Client](www.link.com)
+- [Deployed Client](https://frankazo.github.io/come-criollo-client/)
 
 ## Planning Story
 
@@ -37,9 +37,10 @@ Lorem ipsum dolor amet cloud bread letterpress squid actually, single-origin cof
 
 ### Technologies Used
 
-- Express.js
-- MongoDB / Mongoose
+- React.js
 - Javascript
+- Bootstrap
+- Axios
 
 ### Catalog of Routes
 
