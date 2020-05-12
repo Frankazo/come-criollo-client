@@ -10,6 +10,11 @@ import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Home from '../Home/Home'
 
+import RestaurantIndex from '../Restaurant/RestaurantIndex'
+import Restaurant from '../Restaurant/Restaurant'
+
+import EditReview from '../Reviews/EditReview'
+
 class App extends Component {
   constructor () {
     super()
@@ -43,6 +48,8 @@ class App extends Component {
           />
         ))}
         <main>
+
+          {/* Authentication Routes */}
           <Route exact path='/' render={() => (
             <Home />
           )} />
@@ -57,6 +64,20 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
+          )} />
+
+          {/* Temp Restaurant Routes */}
+          <AuthenticatedRoute user={user} exact path='/restaurant' render={() => (
+            <RestaurantIndex msgAlert={this.msgAlert} user={user} />
+          )} />
+          {/* Restaurant GET and Reviews GET Routes */}
+          <AuthenticatedRoute user={user} exact path='/restaurant/:id' render={() => (
+            <Restaurant msgAlert={this.msgAlert} user={user} />
+          )} />
+
+          {/* Restaurant GET and Reviews GET Routes */}
+          <AuthenticatedRoute user={user} exact path='/restaurant/:id/editreview/:rid' render={({ match }) => (
+            <EditReview msgAlert={this.msgAlert} user={user} match={ match }/>
           )} />
         </main>
       </Fragment>
