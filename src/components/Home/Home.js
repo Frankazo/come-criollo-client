@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+// import Nav from 'react-bootstrap/Nav'
+
 import HeroImage from '../HeroImage'
-// import { Link } from 'react-router-dom'
 import Container from '../Container'
-import Nav from 'react-bootstrap/Nav'
+import Button from '../Button'
 
 const Div = styled.div`
   display: flex;
@@ -19,13 +21,18 @@ const Home = () => {
         </div>
       </HeroImage>
       <Container>
-        <div>
-          <h1>Placeholder</h1>
-          <div className="row">
-            <Nav.Link className="btn btn-info" style={{ color: 'black' }} href="#sign-up">Sign Up</Nav.Link>
-            <Nav.Link className="btn btn-info" style={{ color: 'black' }} href="#sign-in">Sign In</Nav.Link>
+        <ul>
+          <h1 style={{ textAlign: 'center' }} >Connect with Restaurant in your Area</h1>
+          <h1 style={{ textAlign: 'center' }} >Review, Like and love</h1>
+          <div style={{ justifyContent: 'center', alignItems: 'center' }} className="row">
+            <Link to='/sign-up'>
+              <Button>Sign Up</Button>
+            </Link>
+            <Link to='/sign-in' style={{ marginLeft: '5px' }}>
+              <Button>Sign In</Button>
+            </Link>
           </div>
-        </div>
+        </ul>
       </Container>
     </Div>
   )
