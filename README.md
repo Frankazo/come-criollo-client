@@ -11,7 +11,7 @@ App to connect small business with people in third world countries, You as a Use
 
 ## Important Links
 
-- [API Repo](https://github.com/Frankazo/come-criollo-client)
+- [API Repo](https://github.com/Frankazo/come-criollo-api)
 - [Deployed API](https://still-refuge-15449.herokuapp.com/)
 - [Deployed Client](https://frankazo.github.io/come-criollo-client/)
 
