@@ -18,7 +18,7 @@ const unauthenticatedOptions = (
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link style={{ color: 'black' }} href="/">Home</Nav.Link>
+    <Nav.Link style={{ color: 'black' }} href="#/">Home</Nav.Link>
   </Fragment>
 )
 
