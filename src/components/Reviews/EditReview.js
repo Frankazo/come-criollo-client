@@ -41,7 +41,7 @@ const EditReview = (props) => {
   const handleSubmit = () => {
     event.preventDefault()
 
-    updateReview(review, user, props.match.params.rid)
+    updateReview(review, user, props.match.params.id, props.match.params.rid)
       .then(() => {
         msgAlert({
           heading: 'Update Review Success',
@@ -49,7 +49,7 @@ const EditReview = (props) => {
           message: 'Update Is Now Displayed. Look at the page.'
         })
       })
-      .then(() => history.push('/restaurant/:id'))
+      .then(() => history.push(`/restaurant/${props.match.params.rid}`))
       .catch(err => {
         msgAlert({
           heading: 'Update Review Failed',
@@ -60,9 +60,8 @@ const EditReview = (props) => {
   }
 
   useEffect(() => {
-    showReview(user, props.match.params.rid)
+    showReview(user, props.match.params.id, props.match.params.rid)
       .then(res => {
-        console.log(res)
         setReview(res.data.review)
       })
       .then(() => {

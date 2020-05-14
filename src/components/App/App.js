@@ -70,13 +70,14 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/restaurant' render={() => (
             <RestaurantIndex msgAlert={this.msgAlert} user={user} />
           )} />
+
           {/* Restaurant GET and Reviews GET Routes */}
-          <AuthenticatedRoute user={user} exact path='/restaurant/:id' render={() => (
-            <Restaurant msgAlert={this.msgAlert} user={user} />
+          <AuthenticatedRoute user={user} exact path='/restaurant/:id' render={({ match }) => (
+            <Restaurant msgAlert={this.msgAlert} user={user} match={ match }/>
           )} />
 
           {/* Restaurant GET and Reviews GET Routes */}
-          <AuthenticatedRoute user={user} exact path='/restaurant/:id/editreview/:rid' render={({ match }) => (
+          <AuthenticatedRoute user={user} exact path='/restaurant/:rid/edit/:id' render={({ match }) => (
             <EditReview msgAlert={this.msgAlert} user={user} match={ match }/>
           )} />
         </main>

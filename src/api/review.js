@@ -1,9 +1,9 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
-export const indexReviews = user => {
+export const indexReviews = (user, rid) => {
   return axios({
-    url: apiUrl + '/reviews',
+    url: apiUrl + '/reviews/' + rid,
     method: 'GET',
     headers: {
       'Authorization': `Token token=${user.token}`
@@ -11,9 +11,9 @@ export const indexReviews = user => {
   })
 }
 
-export const showReview = (user, id) => {
+export const showReview = (user, id, rid) => {
   return axios({
-    url: apiUrl + '/reviews/' + id,
+    url: apiUrl + `/reviews/${rid}/${id}`,
     method: 'GET',
     headers: {
       'Authorization': `Token token=${user.token}`
@@ -21,9 +21,9 @@ export const showReview = (user, id) => {
   })
 }
 
-export const createReview = (review, user) => {
+export const createReview = (review, user, rid) => {
   return axios({
-    url: apiUrl + '/reviews',
+    url: apiUrl + '/reviews/' + rid,
     method: 'POST',
     headers: {
       'Authorization': `Token token=${user.token}`
@@ -32,9 +32,9 @@ export const createReview = (review, user) => {
   })
 }
 
-export const updateReview = (review, user, id) => {
+export const updateReview = (review, user, id, rid) => {
   return axios({
-    url: apiUrl + '/reviews/' + id,
+    url: apiUrl + `/reviews/${rid}/${id}`,
     method: 'PATCH',
     headers: {
       'Authorization': `Token token=${user.token}`
@@ -43,9 +43,9 @@ export const updateReview = (review, user, id) => {
   })
 }
 
-export const deleteReview = (user, id) => {
+export const deleteReview = (user, id, rid) => {
   return axios({
-    url: apiUrl + '/reviews/' + id,
+    url: apiUrl + `/reviews/${rid}/${id}`,
     method: 'DELETE',
     headers: {
       'Authorization': `Token token=${user.token}`
