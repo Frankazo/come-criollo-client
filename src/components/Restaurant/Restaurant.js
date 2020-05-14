@@ -34,10 +34,11 @@ const Review = styled(Accordion)`
 const Restaurant = (props) => {
   // // deconstruction of the props
   const { user, msgAlert, match } = props
-  // const restId = match.params.id
-  // state variables
+
+  // set state variables
   const [restaurant, setRestaurant] = useState(null)
   const [reviews, setReviews] = useState(null)
+  const [toggle, setToggle] = useState(null)
   const [review, setReview] = useState({
     title: '',
     text: '',
@@ -46,6 +47,14 @@ const Restaurant = (props) => {
 
   const handleChange = event => {
     setReview({ ...review, [event.target.name]: event.target.value })
+  }
+
+  const toggleHandler = event => {
+    if (toggle) {
+      setToggle(null)
+    } else {
+      setToggle('0')
+    }
   }
 
   const handleDelete = event => {
@@ -83,6 +92,13 @@ const Restaurant = (props) => {
           message: 'Review Is Now Displayed. Look at the page.'
         })
       })
+      .then(() => setReview({
+        title: '',
+        text: '',
+        rating: ''
+      }),
+      setToggle(null)
+      )
       .then(() => indexReviews(user, match.params.id))
       .then(res => {
         setReviews(res.data.reviews)
@@ -159,22 +175,26 @@ const Restaurant = (props) => {
       </Card>)
   }
 
+  const accordion = (
+    <Review activeKey={toggle} className="img-preview d-block shadow-lg rounded mb-4 text-center">
+      <Accordion.Toggle style={{ background: 'transparent', borderColor: 'transparent', color: '#00000090', width: '75vh' }} eventKey="0" onClick={toggleHandler}>
+        Leave a Review
+      </Accordion.Toggle>
+      <Accordion.Collapse eventKey="0">
+        <ReviewForm
+          review={review}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+      </Accordion.Collapse>
+    </Review>
+  )
+
   return (
     <div className="Container">
       <div className="row">
         <LgDiv className="col-lg-8">
-          <Review className="img-preview d-block shadow-lg rounded mb-4 text-center">
-            <Accordion.Toggle eventKey="0">
-              Leave a Review
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <ReviewForm
-                review={review}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            </Accordion.Collapse>
-          </Review>
+          {accordion}
           {reviewsJsx}
         </LgDiv>
         <SmDiv className="col-lg-4">

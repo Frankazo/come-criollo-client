@@ -90,7 +90,7 @@ const EditReview = (props) => {
               review={review}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
-              cancelPath="/restaurant/:id"
+              cancelPath={`/restaurant/${props.match.params.rid}`}
             />
           </Review>
         </LgDiv>
