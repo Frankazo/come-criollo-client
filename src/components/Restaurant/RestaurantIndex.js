@@ -34,7 +34,7 @@ const RestaurantIndex = props => {
       return (
         <Link key={rest._id} to={`/restaurant/${rest._id}`}>
           <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
+            <Card.Img variant="top" src={rest.imageUrl} />
             <Card.Body>
               <Card.Title>{rest.restName}</Card.Title>
             </Card.Body>

@@ -1,13 +1,13 @@
 # Come Criollo:
 
-App to connect small business with people in third world countries, You as a User can see restaurants around your area, Like, leave reviews, and connect with them.
+App to help connect people with small businesses in third world countries, You as a User can see restaurants around your area, Like, leave reviews, and connect with them.
 
 
 ## Setup Steps
 
 1. Fork and clone this repository.
-1. Run ` npm install` to install all dependencies
-1. Use `npm run server` to spin up the server.
+2. Run ` npm install` to install all dependencies
+3. Use `npm start` to spin up the server.
 
 ## Important Links
 
@@ -17,7 +17,8 @@ App to connect small business with people in third world countries, You as a Use
 
 ## Planning Story
 
-Lorem ipsum dolor amet cloud bread letterpress squid actually, single-origin coffee williamsburg af poutine fingerstache austin semiotics paleo man braid vexillologist. Tumeric literally banjo pickled disrupt cold-pressed thundercats shoreditch try-hard health goth intelligentsia pop-up small batch skateboard farm-to-table. Meh tofu fam, direct trade tattooed stumptown etsy everyday carry activated charcoal. Neutra cornhole polaroid literally salvia, listicle tofu.
+I develop this idea to build an app that helps connect people to small businesses in the area, for free. Allowing people to give honest reviews on businesses, letting people share and like, creating a community.
+Planning began with two resources in mind, Restaurants, and Reviews, Restaurant will have all the documentation necessary to connect with the business, and it will contain the reviews, this reviews will have a title, description, and a rating, future iterations will have pictures, menu options, and the ability to like other's reviews.
 
 ### User Stories
 
@@ -44,13 +45,15 @@ Lorem ipsum dolor amet cloud bread letterpress squid actually, single-origin cof
 
 ### Unsolved Problems
 
-- Still need to ....
-- Would like to eventually ....
-
+- Add Aws s3 functionality to store Images
+- Store full menus for each restaurant
+- Ability to Like others Reviews
 ---
 
 #### ERD:
 ![ERD](https://i.imgur.com/OsmZn6R.png)
+
+![ERD](https://i.imgur.com/lLC7dh5.png)
 
 #### Wireframe:
 ![wireframe](https://i.imgur.com/zNfgpgs.png)
