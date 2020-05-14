@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { indexReviews, createReview, deleteReview } from '../../api/review'
+import { showRestaurant } from '../../api/restaurant'
 
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
@@ -31,7 +32,11 @@ const Review = styled(Accordion)`
 `
 
 const Restaurant = (props) => {
-  const { user, msgAlert } = props
+  // // deconstruction of the props
+  const { user, msgAlert, match } = props
+  // const restId = match.params.id
+  // state variables
+  const [restaurant, setRestaurant] = useState(null)
   const [reviews, setReviews] = useState(null)
   const [review, setReview] = useState({
     title: '',
@@ -45,7 +50,7 @@ const Restaurant = (props) => {
 
   const handleDelete = event => {
     const id = event.target.id
-    deleteReview(user, id)
+    deleteReview(user, id, match.params.id)
       .then(() => {
         msgAlert({
           heading: 'Review Deleted',
@@ -53,7 +58,7 @@ const Restaurant = (props) => {
           message: 'Succesfully deleted Review'
         })
       })
-      .then(() => indexReviews(user))
+      .then(() => indexReviews(user, match.params.id))
       .then(res => {
         setReviews(res.data.reviews)
       })
@@ -70,7 +75,7 @@ const Restaurant = (props) => {
   const handleSubmit = () => {
     event.preventDefault()
 
-    createReview(review, user)
+    createReview(review, user, match.params.id)
       .then(() => {
         msgAlert({
           heading: 'Create Review Success',
@@ -78,7 +83,7 @@ const Restaurant = (props) => {
           message: 'Review Is Now Displayed. Look at the page.'
         })
       })
-      .then(() => indexReviews(user))
+      .then(() => indexReviews(user, match.params.id))
       .then(res => {
         setReviews(res.data.reviews)
       })
@@ -91,23 +96,26 @@ const Restaurant = (props) => {
       })
   }
 
+  // on mount runt showRestaurant and indexReviews
   useEffect(() => {
-    indexReviews(user)
+    showRestaurant(user, match.params.id)
+      .then(res => {
+        setRestaurant(res.data.restaurant)
+        return res
+      })
+      .then(() => indexReviews(user, match.params.id))
       .then(res => {
         setReviews(res.data.reviews)
       })
-      .then(() => {
+      .then(() => msgAlert({
+        heading: 'Show Restaurant Successfully',
+        message: 'Succesfully retrieve restaurant',
+        variant: 'success'
+      }))
+      .catch(error => {
         msgAlert({
-          heading: 'Index Review Success',
-          variant: 'success',
-          message: 'Succesfully retrieve Reviews'
-        })
-      })
-      .catch((error) => {
-        setReviews(null)
-        msgAlert({
-          heading: 'Index Reviews Failed with error: ' + error.message,
-          message: 'Failed retrieve Review',
+          heading: 'Show Failed with error: ' + error.message,
+          message: 'Error retrieving restaurant',
           variant: 'danger'
         })
       })
@@ -124,7 +132,7 @@ const Restaurant = (props) => {
           <h2>{review.title}</h2>
           {review.text}
           {review.rating}
-          <Link to={`/restaurant/:id/editreview/${review._id}`}>Edit</Link>
+          <Link to={`/restaurant/${match.params.id}/edit/${review._id}`}>Edit</Link>
           <button id={review._id} onClick={handleDelete}>Delete</button>
         </Review>)
       } else {
@@ -135,6 +143,20 @@ const Restaurant = (props) => {
         </Review>)
       }
     })
+  }
+
+  let restJsx
+  if (!restaurant) {
+    restJsx = 'Loading...'
+  } else {
+    restJsx = (
+      <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
+        <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
+        <Card.Body>
+          <Card.Title>{restaurant.restName}</Card.Title>
+          <Card.Title>{restaurant.email}</Card.Title>
+        </Card.Body>
+      </Card>)
   }
 
   return (
@@ -150,19 +172,13 @@ const Restaurant = (props) => {
                 review={review}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                cancelPath="/restaurant/:id"
               />
             </Accordion.Collapse>
           </Review>
           {reviewsJsx}
         </LgDiv>
         <SmDiv className="col-lg-4">
-          <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
-            <Card.Body>
-              <Card.Title>Mamas salad</Card.Title>
-            </Card.Body>
-          </Card>
+          {restJsx}
         </SmDiv>
       </div>
     </div>

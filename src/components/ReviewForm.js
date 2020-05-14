@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-const ReviewForm = ({ review, handleSubmit, handleChange, cancelPath }) => (
+const ReviewForm = ({ review, handleSubmit, handleChange }) => (
   <form onSubmit={handleSubmit}>
     <label>Title</label>
     <input
@@ -29,9 +28,6 @@ const ReviewForm = ({ review, handleSubmit, handleChange, cancelPath }) => (
     />
 
     <button type="submit">Submit</button>
-    <Link to={cancelPath}>
-      <button>Cancel</button>
-    </Link>
   </form>
 )
 

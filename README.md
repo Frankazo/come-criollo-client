@@ -42,16 +42,6 @@ Lorem ipsum dolor amet cloud bread letterpress squid actually, single-origin cof
 - Bootstrap
 - Axios
 
-### Catalog of Routes
-
-Verb         |	URI Pattern
------------- | -------------
-GET | /reviews
-GET | /reviews/:id
-POST | /reviews
-PATCH | /reviews/:id
-DELETE | /reviews/:id
-
 ### Unsolved Problems
 
 - Still need to ....

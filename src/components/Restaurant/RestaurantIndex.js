@@ -1,52 +1,55 @@
-import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import Card from 'react-bootstrap/Card'
 
-// import { GetRest } from '../../api/auth'
-// import messages from '../AutoDismissAlert/messages'
+import { indexRestaurant } from '../../api/restaurant'
 
-// This Class will eventually make an api call to get a list of Restaurants
-// Rigth now will only display Restaurant Dummy Data
-class RestaurantIndex extends Component {
-  constructor () {
-    super()
+const RestaurantIndex = props => {
+  const [restaurants, setRestaurants] = useState(null)
+  const { msgAlert, user } = props
 
-    this.state = {}
+  useEffect(() => {
+    indexRestaurant(user)
+      .then(res => setRestaurants(res.data.restaurant))
+      .then(() => msgAlert({
+        heading: 'Index Restaurants Successfully',
+        message: 'Succesfully retrieve restaurants',
+        variant: 'success'
+      }))
+      .catch(error => {
+        msgAlert({
+          heading: 'Index Failed with error: ' + error.message,
+          message: 'Error retrieving restaurants',
+          variant: 'danger'
+        })
+      })
+  }, [])
+
+  let restJsx
+  if (!restaurants) {
+    restJsx = 'Loading...'
+  } else {
+    restJsx = restaurants.map(rest => {
+      return (
+        <Link key={rest._id} to={`/restaurant/${rest._id}`}>
+          <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
+            <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
+            <Card.Body>
+              <Card.Title>{rest.restName}</Card.Title>
+            </Card.Body>
+          </Card>
+        </Link>
+      )
+    })
   }
-
-  handleChange = event => this.setState({
-    [event.target.name]: event.target.value
-  })
-
-  render () {
-    return (
-      <div>
-        <div className="row row-cols-1 row-cols-md-4">
-          <Link to='/restaurant/:id'>
-            <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-              <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
-              <Card.Body>
-                <Card.Title>Mamas salad</Card.Title>
-              </Card.Body>
-            </Card>
-          </Link>
-          <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
-            <Card.Body>
-              <Card.Title>Wok N Roll</Card.Title>
-            </Card.Body>
-          </Card>
-          <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
-            <Card.Body>
-              <Card.Title>Burgatory</Card.Title>
-            </Card.Body>
-          </Card>
-        </div>
+  return (
+    <div>
+      <div className="row row-cols-1 row-cols-md-4">
+        {restJsx}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default withRouter(RestaurantIndex)
+export default RestaurantIndex
