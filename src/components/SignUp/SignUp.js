@@ -81,6 +81,9 @@ class SignUp extends Component {
                   placeholder="Enter email"
                   onChange={this.handleChange}
                 />
+                <Form.Text className="text-muted">
+                  We will never share your email with anyone else.
+                </Form.Text>
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>

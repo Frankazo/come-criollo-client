@@ -25,7 +25,7 @@ const unauthenticatedOptions = (
 
 const Header = ({ user }) => (
   <Navbar expand="md">
-    <Navbar.Brand href="#"> Come Criollo </Navbar.Brand>
+    <Navbar.Brand> Come Criollo </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
