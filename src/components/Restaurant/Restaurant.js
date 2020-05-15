@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
+import Spinner from '../Spinner'
+
 import { indexReviews, createReview, deleteReview } from '../../api/review'
 import { showRestaurant } from '../../api/restaurant'
 
@@ -9,6 +12,7 @@ import styled from 'styled-components'
 
 // import Button from '../Button'
 import ReviewForm from '../ReviewForm'
+import GoogleApiWrapper from '../googlemap'
 
 const LgDiv = styled.div`
   &:media (min-width: 992px) {
@@ -31,6 +35,46 @@ const Review = styled(Accordion)`
   padding: 10px;
 `
 
+const AccrToggle = styled(Accordion.Toggle)`
+  background: transparent;
+  border-color: transparent;
+  color: #00000090;
+  width: 100%;
+
+  &:focus {
+    outline:0;
+  }
+`
+
+const RestCont = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  height: auto;
+`
+
+const Button = styled.button`
+background: #292b2c;
+border-color: transparent;
+border-radius: 5px;
+margin-left: 3px;
+color: #ffffff;
+
+font-size: 0.75rem;
+padding: 0.35rem 0.5rem;
+
+&:hover{
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: box-shadow;
+  transition-property: box-shadow;
+}
+`
+
 const Restaurant = (props) => {
   // // deconstruction of the props
   const { user, msgAlert, match } = props
@@ -45,10 +89,13 @@ const Restaurant = (props) => {
     rating: ''
   })
 
+  // run whenever we need to update text in a input
   const handleChange = event => {
     setReview({ ...review, [event.target.name]: event.target.value })
   }
 
+  // function to toggle accordion on click
+  // in order to be able to toggle back on submit
   const toggleHandler = event => {
     if (toggle) {
       setToggle(null)
@@ -57,6 +104,7 @@ const Restaurant = (props) => {
     }
   }
 
+  // delete handler function
   const handleDelete = event => {
     const id = event.target.id
     deleteReview(user, id, match.params.id)
@@ -81,6 +129,7 @@ const Restaurant = (props) => {
       })
   }
 
+  // submit handler function
   const handleSubmit = () => {
     event.preventDefault()
 
@@ -137,49 +186,78 @@ const Restaurant = (props) => {
       })
   }, [])
 
+  // Jsx that contains reviews
   let reviewsJsx
-
   if (!reviews) {
-    reviewsJsx = 'Loading...'
+    reviewsJsx = <Spinner />
   } else {
     reviewsJsx = reviews.map(review => {
       if (review.owner === user._id) {
-        return (<Review key={review._id} className="img-preview d-block shadow-lg rounded mb-4">
-          <h2>{review.title}</h2>
-          {review.text}
-          {review.rating}
-          <Link to={`/restaurant/${match.params.id}/edit/${review._id}`}>Edit</Link>
-          <button id={review._id} onClick={handleDelete}>Delete</button>
-        </Review>)
+        return (
+          <Review key={review._id} className="img-preview d-block shadow-lg rounded mb-4">
+            <div style={{ padding: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h2>{review.title}</h2>
+                <img style={{ width: '140px', height: '30px' }} src={require(`../../../public/${review.rating}.png`)} />
+              </div>
+              <p>{review.text}</p>
+              <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                <Button variant="dark" id={review._id} onClick={handleDelete}>Delete</Button>
+                <Button variant="dark"><Link style={{ color: 'white' }} to={`/restaurant/${match.params.id}/edit/${review._id}`}>Edit</Link></Button>
+              </div>
+            </div>
+          </Review>
+        )
       } else {
-        return (<Review key={review._id} className="img-preview d-block shadow-lg rounded mb-4">
-          <h2>{review.title}</h2>
-          {review.text}
-          {review.rating}
-        </Review>)
+        return (
+          <Review key={review._id} className="img-preview d-block shadow-lg rounded mb-4">
+            <div style={{ padding: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h2>{review.title}</h2>
+                <img style={{ width: '140px', height: '30px' }} src={require(`../../../public/${review.rating}.png`)} />
+              </div>
+              <p>{review.text}</p>
+            </div>
+          </Review>
+        )
       }
     })
   }
 
+  // Jsx that contains the restaurant
   let restJsx
   if (!restaurant) {
-    restJsx = 'Loading...'
+    restJsx = <Spinner />
   } else {
     restJsx = (
-      <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-        <Card.Img variant="top" src={restaurant.imageUrl} />
-        <Card.Body>
-          <Card.Title>{restaurant.restName}</Card.Title>
-          <Card.Title>{restaurant.email}</Card.Title>
-        </Card.Body>
-      </Card>)
+      <RestCont>
+        <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
+          <Card.Img variant="top" src={restaurant.imageUrl} />
+          <Card.Body>
+            <Card.Title>{restaurant.restName}</Card.Title>
+            <Card.Title>{restaurant.description}</Card.Title>
+          </Card.Body>
+        </Card>
+        <div style={{ marginTop: '110px', marginLeft: '40px' }}>
+          <h3>Contact Info</h3>
+          <p>{restaurant.email}</p>
+          <p>{restaurant.phone}</p>
+          <p>{restaurant.website}</p>
+          <p>{restaurant.location}</p>
+          <GoogleApiWrapper
+            address = {restaurant.location}
+          />
+        </div>
+      </RestCont>
+    )
   }
 
+  // Jsx that contains the create form inside an accordion
   const accordion = (
-    <Review activeKey={toggle} className="img-preview d-block shadow-lg rounded mb-4 text-center">
-      <Accordion.Toggle style={{ background: 'transparent', borderColor: 'transparent', color: '#00000090', width: '75vh' }} eventKey="0" onClick={toggleHandler}>
+    <Review activeKey={toggle} className="img-preview d-block shadow-lg rounded mb-4">
+      <AccrToggle eventKey="0" onClick={toggleHandler}>
         Leave a Review
-      </Accordion.Toggle>
+      </AccrToggle>
       <Accordion.Collapse eventKey="0">
         <ReviewForm
           review={review}
@@ -190,6 +268,7 @@ const Restaurant = (props) => {
     </Review>
   )
 
+  // return statement
   return (
     <div className="Container">
       <div className="row">

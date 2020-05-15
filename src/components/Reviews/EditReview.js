@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { showReview, updateReview } from '../../api/review'
+import { showRestaurant } from '../../api/restaurant'
 
 import Card from 'react-bootstrap/Card'
 import styled from 'styled-components'
-
-// import Button from '../Button'
+import Spinner from '../Spinner'
 import ReviewForm from '../ReviewForm'
 
 const LgDiv = styled.div`
@@ -29,6 +29,7 @@ const Review = styled.div`
 
 const EditReview = (props) => {
   const { user, msgAlert, history } = props
+  const [restaurant, setRestaurant] = useState(null)
   const [review, setReview] = useState({
     title: '',
     text: '',
@@ -60,7 +61,12 @@ const EditReview = (props) => {
   }
 
   useEffect(() => {
-    showReview(user, props.match.params.id, props.match.params.rid)
+    showRestaurant(user, props.match.params.rid)
+      .then(res => {
+        setRestaurant(res.data.restaurant)
+        return res
+      })
+      .then(() => showReview(user, props.match.params.id, props.match.params.rid))
       .then(res => {
         setReview(res.data.review)
       })
@@ -81,11 +87,27 @@ const EditReview = (props) => {
       })
   }, [])
 
+  // Jsx that contains the restaurant
+  let restJsx
+  if (!restaurant) {
+    restJsx = <Spinner />
+  } else {
+    restJsx = (
+      <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
+        <Card.Img variant="top" src={restaurant.imageUrl} />
+        <Card.Body>
+          <Card.Title>{restaurant.restName}</Card.Title>
+          <Card.Title>{restaurant.email}</Card.Title>
+        </Card.Body>
+      </Card>)
+  }
+
   return (
     <div className="Container">
       <div className="row">
         <LgDiv className="col-lg-8">
-          <Review className="img-preview d-block shadow-lg rounded mb-4 text-center">
+          <Review className="img-preview d-block shadow-lg rounded mb-4">
+            <h3>Edit Review</h3>
             <ReviewForm
               review={review}
               handleChange={handleChange}
@@ -95,12 +117,7 @@ const EditReview = (props) => {
           </Review>
         </LgDiv>
         <SmDiv className="col-lg-4">
-          <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" />
-            <Card.Body>
-              <Card.Title>Mamas salad</Card.Title>
-            </Card.Body>
-          </Card>
+          {restJsx}
         </SmDiv>
       </div>
     </div>

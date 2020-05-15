@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import Spinner from '../Spinner'
 import Card from 'react-bootstrap/Card'
-
 import { indexRestaurant } from '../../api/restaurant'
 
 const RestaurantIndex = props => {
@@ -28,11 +28,11 @@ const RestaurantIndex = props => {
 
   let restJsx
   if (!restaurants) {
-    restJsx = 'Loading...'
+    restJsx = <Spinner />
   } else {
     restJsx = restaurants.map(rest => {
       return (
-        <Link key={rest._id} to={`/restaurant/${rest._id}`}>
+        <Link style={{ marginBottom: '10px', color: 'black' }} key={rest._id} to={`/restaurant/${rest._id}`}>
           <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
             <Card.Img variant="top" src={rest.imageUrl} />
             <Card.Body>
