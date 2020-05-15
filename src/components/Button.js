@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 
 const Button = styled.button`
-  /* background: HotPink; */
   background: #292b2c;
-  /* border-width: 2px; */
   border-color: transparent;
   border-radius: 5px;
 
