@@ -7,7 +7,11 @@ App to help connect people with small businesses in third world countries, You a
 
 1. Fork and clone this repository.
 2. Run ` npm install` to install all dependencies
-3. Use `npm start` to spin up the server.
+3. To use GoogleMaps Api review the Docs to get an API key
+4. Run `npm i react-geocode`
+5. Run `npm i google-maps-react`
+6. Add your api Key
+7. Use `npm start` to spin up the server.
 
 ## Important Links
 
@@ -19,6 +23,8 @@ App to help connect people with small businesses in third world countries, You a
 
 I develop this idea to build an app that helps connect people to small businesses in the area, for free. Allowing people to give honest reviews on businesses, letting people share and like, creating a community.
 Planning began with two resources in mind, Restaurants, and Reviews, Restaurant will have all the documentation necessary to connect with the business, and it will contain the reviews, this reviews will have a title, description, and a rating, future iterations will have pictures, menu options, and the ability to like other's reviews.
+
+Planning in detail: [Click Here](./public/planning.pdf)
 
 ### User Stories
 
@@ -39,21 +45,28 @@ Planning began with two resources in mind, Restaurants, and Reviews, Restaurant 
 ### Technologies Used
 
 - React.js
+- Node.js
 - Javascript
 - Bootstrap
 - Axios
+- HTML/CSS
+- Git
+- GoogleMaps API
 
 ### Unsolved Problems
 
 - Add Aws s3 functionality to store Images
 - Store full menus for each restaurant
 - Ability to Like others Reviews
+
 ---
 
 #### ERD:
 ![ERD](https://i.imgur.com/OsmZn6R.png)
 
 ![ERD](https://i.imgur.com/lLC7dh5.png)
+
+---
 
 #### Wireframe:
 ![wireframe](https://i.imgur.com/zNfgpgs.png)
@@ -65,3 +78,9 @@ Planning began with two resources in mind, Restaurants, and Reviews, Restaurant 
 ![wireframe](https://i.imgur.com/hONTvEb.png)
 
 ---
+
+#### Screenshots:
+
+![screenshot](https://i.imgur.com/Z9VgQ9n.png)
+![screenshot](https://i.imgur.com/335miZ9.png)
+![screenshot](https://i.imgur.com/nDbRLiM.png)
