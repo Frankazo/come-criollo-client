@@ -9,10 +9,7 @@ import { showRestaurant } from '../../api/restaurant'
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import styled from 'styled-components'
-
-// import Button from '../Button'
 import ReviewForm from '../ReviewForm'
-import GoogleApiWrapper from '../googlemap'
 
 const LgDiv = styled.div`
   &:media (min-width: 992px) {
@@ -244,9 +241,7 @@ const Restaurant = (props) => {
           <p>{restaurant.phone}</p>
           <p>{restaurant.website}</p>
           <p>{restaurant.location}</p>
-          <GoogleApiWrapper
-            address = {restaurant.location}
-          />
+          <iframe src={restaurant.map} width="90%" height="500" frameBorder="0"/>
         </div>
       </RestCont>
     )
