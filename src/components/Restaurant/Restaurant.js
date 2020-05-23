@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import Spinner from '../Spinner'
+import RestCont from '../RestCont'
+import ReviewForm from '../ReviewForm'
 
 import { indexReviews, createReview, deleteReview } from '../../api/review'
 import { showRestaurant } from '../../api/restaurant'
 
-import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import styled from 'styled-components'
-import ReviewForm from '../ReviewForm'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 const LgDiv = styled.div`
   &:media (min-width: 992px) {
@@ -43,12 +45,6 @@ const AccrToggle = styled(Accordion.Toggle)`
   }
 `
 
-const RestCont = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  height: auto;
-`
-
 const Button = styled.button`
 background: #292b2c;
 border-color: transparent;
@@ -56,8 +52,8 @@ border-radius: 5px;
 margin-left: 3px;
 color: #ffffff;
 
-font-size: 0.75rem;
-padding: 0.35rem 0.5rem;
+font-size: 1rem;
+width: 30px;
 
 &:hover{
   display: inline-block;
@@ -195,12 +191,12 @@ const Restaurant = (props) => {
             <div style={{ padding: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>{review.title}</h2>
-                <img style={{ width: '140px', height: '30px' }} src={require(`../../../public/${review.rating}.png`)} />
+                <img style={{ width: '130px', height: '30px' }} src={require(`../../../public/${review.rating}.png`)} />
               </div>
               <p>{review.text}</p>
               <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                <Button variant="dark" id={review._id} onClick={handleDelete}>Delete</Button>
-                <Button variant="dark"><Link style={{ color: 'white' }} to={`/restaurant/${match.params.id}/edit/${review._id}`}>Edit</Link></Button>
+                <Button variant="dark" id={review._id} onClick={handleDelete}>X</Button>
+                <Link style={{ color: 'white' }} to={`/restaurant/${match.params.id}/edit/${review._id}`}><Button variant="dark"><FontAwesomeIcon icon={faEdit} /></Button></Link>
               </div>
             </div>
           </Review>
@@ -227,23 +223,9 @@ const Restaurant = (props) => {
     restJsx = <Spinner />
   } else {
     restJsx = (
-      <RestCont>
-        <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-          <Card.Img variant="top" src={restaurant.imageUrl} />
-          <Card.Body>
-            <Card.Title>{restaurant.restName}</Card.Title>
-            <Card.Title>{restaurant.description}</Card.Title>
-          </Card.Body>
-        </Card>
-        <div style={{ marginTop: '110px', marginLeft: '40px' }}>
-          <h3>Contact Info</h3>
-          <p>{restaurant.email}</p>
-          <p>{restaurant.phone}</p>
-          <p>{restaurant.website}</p>
-          <p>{restaurant.location}</p>
-          <iframe src={restaurant.map} width="90%" height="500" frameBorder="0"/>
-        </div>
-      </RestCont>
+      <RestCont
+        restaurant={restaurant}
+      />
     )
   }
 
