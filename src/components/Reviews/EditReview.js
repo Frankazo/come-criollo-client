@@ -3,11 +3,10 @@ import { withRouter } from 'react-router-dom'
 import { showReview, updateReview } from '../../api/review'
 import { showRestaurant } from '../../api/restaurant'
 
-import Card from 'react-bootstrap/Card'
 import styled from 'styled-components'
 import Spinner from '../Spinner'
 import ReviewForm from '../ReviewForm'
-import GoogleApiWrapper from '../googlemap'
+import RestCont from '../RestCont'
 
 const LgDiv = styled.div`
   &:media (min-width: 992px) {
@@ -26,11 +25,6 @@ const Review = styled.div`
   margin-left: 30px;
   margin-top: 50px;
   padding: 10px;
-`
-const RestCont = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  height: auto;
 `
 
 const EditReview = (props) => {
@@ -99,25 +93,9 @@ const EditReview = (props) => {
     restJsx = <Spinner />
   } else {
     restJsx = (
-      <RestCont>
-        <Card style={{ margin: '40px', width: '27rem', height: '15rem' }}>
-          <Card.Img variant="top" src={restaurant.imageUrl} />
-          <Card.Body>
-            <Card.Title>{restaurant.restName}</Card.Title>
-            <Card.Title>{restaurant.description}</Card.Title>
-          </Card.Body>
-        </Card>
-        <div style={{ marginTop: '110px', marginLeft: '40px' }}>
-          <h3>Contact Info</h3>
-          <p>{restaurant.email}</p>
-          <p>{restaurant.phone}</p>
-          <p>{restaurant.website}</p>
-          <p>{restaurant.location}</p>
-          <GoogleApiWrapper
-            address = {restaurant.location}
-          />
-        </div>
-      </RestCont>
+      <RestCont
+        restaurant={restaurant}
+      />
     )
   }
 
