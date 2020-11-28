@@ -20,35 +20,3 @@ export const showRestaurant = (user, id) => {
     }
   })
 }
-
-// export const createReview = (review, user) => {
-//   return axios({
-//     url: apiUrl + '/reviews',
-//     method: 'POST',
-//     headers: {
-//       'Authorization': `Token token=${user.token}`
-//     },
-//     data: { review }
-//   })
-// }
-//
-// export const updateReview = (review, user, id) => {
-//   return axios({
-//     url: apiUrl + '/reviews/' + id,
-//     method: 'PATCH',
-//     headers: {
-//       'Authorization': `Token token=${user.token}`
-//     },
-//     data: { review }
-//   })
-// }
-//
-// export const deleteReview = (user, id) => {
-//   return axios({
-//     url: apiUrl + '/reviews/' + id,
-//     method: 'DELETE',
-//     headers: {
-//       'Authorization': `Token token=${user.token}`
-//     }
-//   })
-// }

@@ -1,78 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+
+// components imports
 import Spinner from '../Spinner'
 import RestCont from '../RestCont'
 import ReviewForm from '../ReviewForm'
 
+// api calls
 import { indexReviews, createReview, deleteReview } from '../../api/review'
 import { showRestaurant } from '../../api/restaurant'
 
+// styles
 import Accordion from 'react-bootstrap/Accordion'
-import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-
-const LgDiv = styled.div`
-  &:media (min-width: 992px) {
-    flex: 0 0 66.6666666667%;
-    max-width: 66.6666666667%;
-  }
-`
-
-const SmDiv = styled.div`
-  &:media (min-width: 992px) {
-    flex: 0 0 33.3333333333%;
-    max-width: 33.3333333333%;
-  }
-`
-
-const Review = styled(Accordion)`
-  height: auto;
-  margin-left: 30px;
-  margin-top: 50px;
-  padding: 10px;
-`
-
-const AccrToggle = styled(Accordion.Toggle)`
-  background: transparent;
-  border-color: transparent;
-  color: #00000090;
-  width: 100%;
-
-  &:focus {
-    outline:0;
-  }
-`
-
-const Button = styled.button`
-background: #292b2c;
-border-color: transparent;
-border-radius: 5px;
-margin-left: 3px;
-color: #ffffff;
-
-font-size: 1rem;
-width: 30px;
-
-&:hover{
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 1);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-property: box-shadow;
-  transition-property: box-shadow;
-}
-`
+import { LgDiv, SmDiv, Review, AccrToggle, Button } from './styles'
 
 const Restaurant = (props) => {
-  // // deconstruction of the props
+  // deconstruction of the props
   const { user, msgAlert, match } = props
 
-  // set state variables
+  // State variables
   const [restaurant, setRestaurant] = useState(null)
   const [reviews, setReviews] = useState(null)
   const [toggle, setToggle] = useState(null)
@@ -82,7 +32,7 @@ const Restaurant = (props) => {
     rating: ''
   })
 
-  // run whenever we need to update text in a input
+  // run whenever we need to update text in an input
   const handleChange = event => {
     setReview({ ...review, [event.target.name]: event.target.value })
   }

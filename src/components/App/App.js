@@ -66,7 +66,7 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
 
-          {/* Temp Restaurant Routes */}
+          {/* Index all Restaurants */}
           <AuthenticatedRoute user={user} exact path='/restaurant' render={() => (
             <RestaurantIndex msgAlert={this.msgAlert} user={user} />
           )} />
