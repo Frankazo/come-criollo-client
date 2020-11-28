@@ -9,13 +9,13 @@ import ReviewForm from '../ReviewForm'
 import RestCont from '../RestCont'
 
 const LgDiv = styled.div`
-  &:media (min-width: 992px) {
+  @media (min-width: 992px) {
     flex: 0 0 66.6666666667%;
     max-width: 66.6666666667%;
   }
 `
 const SmDiv = styled.div`
-  &:media (min-width: 992px) {
+  @media (min-width: 992px) {
     flex: 0 0 33.3333333333%;
     max-width: 33.3333333333%;
   }
